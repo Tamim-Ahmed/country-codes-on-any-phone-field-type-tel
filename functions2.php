@@ -1,9 +1,9 @@
 function enqueue_intl_tel_input() {
     // Enqueue intl-tel-input CSS
-    wp_enqueue_style('intl-tel-input', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/6.4.1/css/intlTelInput.css');
+    wp_enqueue_style('intl-tel-input', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/css/intlTelInput.min.css');
 
     // Enqueue intl-tel-input JavaScript and utils.js
-    wp_enqueue_script('intl-tel-input', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/6.4.1/js/intlTelInput.min.js', array('jquery'), null, true);
+    wp_enqueue_script('intl-tel-input', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/intlTelInput.min.js', array('jquery'), null, true);
     wp_enqueue_script('intl-tel-input-utils', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js', array('intl-tel-input'), null, true);
 }
 add_action('wp_enqueue_scripts', 'enqueue_intl_tel_input');
@@ -20,18 +20,13 @@ function initialize_intl_tel_input() {
             inputTel.forEach(function(input) {
                 var iti = window.intlTelInput(input, {
                     utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js",
-                    initialCountry: "bd", // You can change this code to adjust your country selected by default. now its selected bd/Bangladesh
+                    initialCountry: "bd", // Change default country code according to your needs. Its Set default country to BD/Bangladesh
                     separateDialCode: true
                 });
 
                 iti.promise.then(function() {
-                    var countryCode = iti.getSelectedCountryData().dialCode;
-                    input.value = "+" + countryCode;
-
-                    // Clear the input field after setting the country
-                    input.addEventListener("focus", function() {
-                        input.value = "";
-                    });
+                    // Clear the input field after initializing
+                    input.value = "";
                 });
             });
         });
